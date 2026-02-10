@@ -1,0 +1,26 @@
+{
+  "name": "jhn-finance-aibroker-correction-1",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "@google/genai": "^1.40.0",
+    "path": "^0.12.7",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "process": "^0.11.10"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "JHN Finance AIBroker Correction 1",
+  "description": "An AI-powered voice chatbot for JHN Finance to provide immediate quotes to potential clients by gathering necessary information through a natural conversation.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
