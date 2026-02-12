@@ -311,10 +311,8 @@ export const Chatbot: React.FC = () => {
 
   const isActive = status !== ChatStatus.IDLE && status !== ChatStatus.ERROR;
 
-  const botHasConfirmationQuestion = transcription.some((e) => e.speaker === 'bot' && e.text.includes('Is that correct?'));
-  const lastUserMessage = [...transcription].reverse().find((e) => e.speaker === 'user')?.text ?? '';
-  const lastUserIsConfirmation = /yes|correct|that's right|yep|yeah/i.test(lastUserMessage.trim());
-  const showSubmitButton = transcription.length >= 2 && botHasConfirmationQuestion && lastUserIsConfirmation && !showFeedback && !isSubmitting;
+  const botSaidThankYou = transcription.some((e) => e.speaker === 'bot' && e.text.includes('Thank you for using the JHN Finance AI Agent!'));
+  const showSubmitButton = transcription.length >= 2 && botSaidThankYou && !showFeedback && !isSubmitting;
 
   const ButtonGroup = (
     <div className="flex flex-col items-center">
@@ -407,7 +405,7 @@ export const Chatbot: React.FC = () => {
                     <button
                       onClick={() => handleDataSubmission()}
                       disabled={isSubmitting}
-                      className="w-full max-w-xs px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full max-w-xs px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? 'Submitting...' : 'Submit quote'}
                     </button>
