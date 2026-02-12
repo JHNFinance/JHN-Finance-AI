@@ -32,8 +32,16 @@ Your conversation flow MUST be as follows:
 
 IMPORTANT: Do not deviate from this script. Do not provide financial advice. Your sole purpose is information gathering. Keep your responses concise.`;
 
+const getChatUrl = () => {
+  const base = typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname || '/'}`.replace(/\/$/, '') : '';
+  return `${base}?open=1`;
+};
+
 export const Chatbot: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return new URLSearchParams(window.location.search).get('open') === '1';
+  });
   const [status, setStatus] = useState<ChatStatus>(ChatStatus.IDLE);
   const [transcription, setTranscription] = useState<TranscriptionEntry[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -145,7 +153,7 @@ export const Chatbot: React.FC = () => {
         });
 
         const extractedData = JSON.parse(response.text);
-        const webhookUrl = 'https://www.wix.com/_api/webhooks/v1/automation/........';
+        const webhookUrl = 'https://manage.wix.com/_api/webhook-trigger/report/63793e4c-78ef-428f-ac61-a109a30f29d1/507452c8-fff6-48f6-b12b-dbe871e8fed9';
 
         await fetch(webhookUrl, {
             method: 'POST',
@@ -336,7 +344,7 @@ export const Chatbot: React.FC = () => {
              <div className="relative bg-purple-700 text-white px-4 py-2 rounded-2xl shadow-lg animate-bounce">
                 <p className="text-base font-bold text-center">'Speak' for an AI Instant Quote!”</p>
             </div>
-            <button onClick={() => setIsOpen(true)} className="w-28 h-28 bg-white rounded-full flex flex-col items-center justify-center gap-1 glow-effect shadow-lg">
+            <button onClick={() => window.open(getChatUrl(), '_blank', 'noopener,noreferrer')} className="w-28 h-28 bg-white rounded-full flex flex-col items-center justify-center gap-1 glow-effect shadow-lg">
                 <img src="https://static.wixstatic.com/media/09d8fd_6285ad48bc614daa8fe08d6c1c4d2b25~mv2.png/v1/fill/w_170,h_167,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/JHN%20FINANCE%20SEAL%20ON%20TRANSPARENT.png" alt="Logo" className="h-20 w-20" />
                 <MicrophoneIcon className="h-6 w-6 text-purple-600" />
             </button>

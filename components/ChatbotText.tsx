@@ -119,7 +119,7 @@ ${transcriptText}`,
       });
 
       const extractedData = JSON.parse(response.text ?? '{}');
-      const webhookUrl = 'https://www.wix.com/_api/webhooks/v1/automation/........';
+      const webhookUrl = 'https://manage.wix.com/_api/webhook-trigger/report/63793e4c-78ef-428f-ac61-a109a30f29d1/507452c8-fff6-48f6-b12b-dbe871e8fed9';
 
       await fetch(webhookUrl, {
         method: 'POST',
