@@ -119,16 +119,23 @@ ${transcriptText}`,
       });
 
       const extractedData = JSON.parse(response.text ?? '{}');
+      // Use the URL from Wix Automations: trigger = "Webhook received", then Copy the Webhook URL
       const webhookUrl = 'https://manage.wix.com/_api/webhook-trigger/report/63793e4c-78ef-428f-ac61-a109a30f29d1/507452c8-fff6-48f6-b12b-dbe871e8fed9';
 
-      await fetch(webhookUrl, {
+      const webhookRes = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(extractedData),
       });
+      if (!webhookRes.ok) {
+        const errText = await webhookRes.text();
+        console.error('Webhook failed:', webhookRes.status, errText);
+        throw new Error(`Webhook failed (${webhookRes.status}). Check URL is from Automations > Webhook received.`);
+      }
       success = true;
     } catch (e: any) {
       console.error('Submission error:', e);
+      setError(e?.message || 'Quote submission failed. Check console.');
     } finally {
       setIsSubmitting(false);
       isSubmittingRef.current = false;
