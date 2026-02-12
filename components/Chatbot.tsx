@@ -4,10 +4,12 @@ import { ChatStatus, TranscriptionEntry } from '../types';
 import { PurpleStar, MicrophoneIcon, CloseIcon, ThumbsUpIcon, ThumbsDownIcon } from './icons';
 import { encode, decode, decodeAudioData } from '../services/audioUtils';
 
-// Helper to get API Key safely from either location
+// Helper to get API Key: Vite build (Vercel) or server-injected (local)
 const getApiKey = (): string => {
+  const fromVite = (import.meta as any).env?.VITE_GEMINI_API_KEY;
+  if (fromVite) return fromVite;
   const env = (window as any).process?.env || {};
-  return env.GOOGLE_GEMINI_API_KEY || env.API_KEY || '';
+  return env.GOOGLE_GEMINI_API_KEY || env.API_KEY || env.GEMINI_API_KEY || '';
 };
 
 const SYSTEM_INSTRUCTION = `You are an AI voice assistant for JHN Finance, a financial services company. Your name is the JHN Finance AI Agent. Your goal is to efficiently gather information from potential clients for an insurance or annuity quote. You must be friendly, professional, and get straight to the point.
