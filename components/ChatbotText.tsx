@@ -304,16 +304,16 @@ ${transcriptText}`,
               {showFeedback && (
                 <div className="flex justify-center pt-4">
                   {feedbackSubmitted ? (
-                    <p className="text-green-600 font-bold">Feedback received. Thank you!</p>
+                    <p className="text-purple-600 font-bold">Feedback received. Thank you!</p>
                   ) : (
                     <div className="flex flex-col items-center gap-2">
                       <p className="text-sm font-bold text-gray-600">Rate your experience:</p>
                       <div className="flex gap-4">
                         <button
                           onClick={() => setFeedbackSubmitted(true)}
-                          className="p-2 bg-gray-100 rounded-full hover:bg-green-100"
+                          className="p-2 bg-gray-100 rounded-full hover:bg-lime-100"
                         >
-                          <ThumbsUpIcon className="w-6 h-6 text-green-600" />
+                          <ThumbsUpIcon className="w-6 h-6 text-lime-600" />
                         </button>
                         <button
                           onClick={() => setFeedbackSubmitted(true)}
