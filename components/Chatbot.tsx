@@ -357,7 +357,7 @@ export const Chatbot: React.FC = () => {
                 <h1 className="text-xl font-bold text-gray-800 mt-1">JHN Finance AI Agent</h1>
             </div>
 
-            <div className="flex-grow my-2 overflow-y-auto px-2 flex flex-col">
+            <div className="flex-grow my-2 overflow-y-auto px-2 flex flex-col" style={{ touchAction: 'pan-y', overscrollBehavior: 'contain' }}>
                 {status === ChatStatus.ERROR ? (
                     <div className="flex-grow flex flex-col items-center justify-center text-center space-y-4 px-4">
                         <svg className="h-12 w-12 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
