@@ -336,8 +336,9 @@ export const Chatbot: React.FC = () => {
              <div className="relative bg-purple-700 text-white px-4 py-2 rounded-2xl shadow-lg animate-bounce">
                 <p className="text-base font-bold text-center">'Speak' for an AI Instant Quote!”</p>
             </div>
-            <button onClick={() => setIsOpen(true)} className="w-28 h-28 bg-white rounded-full flex items-center justify-center glow-effect shadow-lg">
-                <img src="https://static.wixstatic.com/media/09d8fd_6285ad48bc614daa8fe08d6c1c4d2b25~mv2.png/v1/fill/w_170,h_167,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/JHN%20FINANCE%20SEAL%20ON%20TRANSPARENT.png" alt="Logo" className="h-24 w-24" />
+            <button onClick={() => setIsOpen(true)} className="w-28 h-28 bg-white rounded-full flex flex-col items-center justify-center gap-1 glow-effect shadow-lg">
+                <img src="https://static.wixstatic.com/media/09d8fd_6285ad48bc614daa8fe08d6c1c4d2b25~mv2.png/v1/fill/w_170,h_167,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/JHN%20FINANCE%20SEAL%20ON%20TRANSPARENT.png" alt="Logo" className="h-20 w-20" />
+                <MicrophoneIcon className="h-6 w-6 text-purple-600" />
             </button>
             <div className="flex items-center gap-1">
                 <p className="text-xs text-gray-600">Powered by Google Gemini</p>
@@ -363,13 +364,11 @@ export const Chatbot: React.FC = () => {
                         <svg className="h-12 w-12 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         <p className="text-lg font-semibold text-red-600">Connection Issue</p>
                         <p className="text-gray-600 text-sm">{error}</p>
-                        <div className="pt-2">{ButtonGroup}</div>
                     </div>
                 ) : transcription.length === 0 && !showFeedback ? (
                     <div className="flex-grow flex flex-col items-center justify-center text-center space-y-4">
                         <p className="text-lg font-semibold text-gray-600">Skip the Phone Tag: Start Your Quote Using AI for you and your Broker!</p>
                         <p className="text-sm text-gray-400 italic">Click the microphone below to begin.</p>
-                        <div className="mt-4">{ButtonGroup}</div>
                     </div>
                 ) : (
                     <div className="space-y-4">
@@ -398,8 +397,8 @@ export const Chatbot: React.FC = () => {
                 )}
             </div>
             
-            {/* Consolidated footer microphone: only appears when chat has started and is not in error/feedback state */}
-            {!showFeedback && transcription.length > 0 && status !== ChatStatus.ERROR && (
+            {/* Microphone button: always visible in footer (except feedback state) */}
+            {!showFeedback && (
                  <div className="flex-shrink-0 flex flex-col items-center pt-3 border-t">
                     {ButtonGroup}
                 </div>
