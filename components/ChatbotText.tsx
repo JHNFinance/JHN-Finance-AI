@@ -152,16 +152,15 @@ ${transcriptText}`,
       text.toLowerCase().includes('correct');
 
     // User confirming "Is that correct?" -> add messages and trigger submission
-    if (lastBotMessage.includes('Is that correct?') && isConfirmationAnswer && !isSubmittingRef.current) {
+    if (lastBotMessage.includes('Is that correct?') && isConfirmationAnswer) {
       const userEntry: TranscriptionEntry = { speaker: 'user', text, isFinal: true };
       setTranscription((prev) => [...prev, userEntry]);
       chatHistoryRef.current.push({ role: 'user', parts: [{ text }] });
       const closingMessage =
-        'Perfect! A JHN Finance representative will review your information and get in touch with you shortly with your personalized quote. Thank you for using the JHN Finance AI Agent!';
+        'Perfect! Click "Submit quote" below to send your information. A JHN Finance representative will review it and get in touch with you shortly.';
       const botEntry: TranscriptionEntry = { speaker: 'bot', text: closingMessage, isFinal: true };
       setTranscription((prev) => [...prev, botEntry]);
       chatHistoryRef.current.push({ role: 'model', parts: [{ text: closingMessage }] });
-      setTimeout(() => handleDataSubmission(), 100);
       return;
     }
 
@@ -325,6 +324,23 @@ ${transcriptText}`,
             </div>
           )}
         </div>
+
+        {(() => {
+          const botHasConfirmation = transcription.some((e) => e.speaker === 'bot' && e.text.includes('Is that correct?'));
+          const lastUser = [...transcription].reverse().find((e) => e.speaker === 'user')?.text ?? '';
+          const showSubmit = transcription.length >= 2 && botHasConfirmation && /yes|correct|that's right|yep|yeah/i.test(lastUser.trim()) && !showFeedback && !isSubmitting;
+          return showSubmit ? (
+            <div className="flex-shrink-0 flex flex-col items-center pt-2 pb-2 border-t">
+              <button
+                onClick={() => handleDataSubmission()}
+                disabled={isSubmitting}
+                className="w-full max-w-xs px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit quote'}
+              </button>
+            </div>
+          ) : null;
+        })()}
 
         {!showFeedback && !error && (
           <div className="flex-shrink-0 flex gap-2 pt-3 border-t mt-2">

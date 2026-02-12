@@ -261,15 +261,6 @@ export const Chatbot: React.FC = () => {
 
             if(message.serverContent?.turnComplete) {
                 setTranscription(prev => prev.map(entry => ({ ...entry, isFinal: true })));
-                const lastBotMessage = currentOutputTranscriptionRef.current;
-                const lastUserMessage = currentInputTranscriptionRef.current.toLowerCase();
-                const isConfirmationQuestion = lastBotMessage.includes("Is that correct?");
-                const isConfirmationAnswer = lastUserMessage.includes("yes") || lastUserMessage.includes("correct");
-                
-                if (isConfirmationQuestion && isConfirmationAnswer && !isSubmittingRef.current) {
-                    isSubmittingRef.current = true;
-                    setTimeout(() => handleDataSubmission(), 100);
-                }
                 currentInputTranscriptionRef.current = '';
                 currentOutputTranscriptionRef.current = '';
             }
@@ -319,6 +310,11 @@ export const Chatbot: React.FC = () => {
   };
 
   const isActive = status !== ChatStatus.IDLE && status !== ChatStatus.ERROR;
+
+  const botHasConfirmationQuestion = transcription.some((e) => e.speaker === 'bot' && e.text.includes('Is that correct?'));
+  const lastUserMessage = [...transcription].reverse().find((e) => e.speaker === 'user')?.text ?? '';
+  const lastUserIsConfirmation = /yes|correct|that's right|yep|yeah/i.test(lastUserMessage.trim());
+  const showSubmitButton = transcription.length >= 2 && botHasConfirmationQuestion && lastUserIsConfirmation && !showFeedback && !isSubmitting;
 
   const ButtonGroup = (
     <div className="flex flex-col items-center">
@@ -405,6 +401,18 @@ export const Chatbot: React.FC = () => {
                 )}
             </div>
             
+            {/* Submit quote button: shown after user confirms, fires webhook */}
+            {showSubmitButton && (
+                 <div className="flex-shrink-0 flex flex-col items-center pt-2 pb-2 border-t">
+                    <button
+                      onClick={() => handleDataSubmission()}
+                      disabled={isSubmitting}
+                      className="w-full max-w-xs px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? 'Submitting...' : 'Submit quote'}
+                    </button>
+                 </div>
+            )}
             {/* Microphone button: always visible in footer (except feedback state) */}
             {!showFeedback && (
                  <div className="flex-shrink-0 flex flex-col items-center pt-3 border-t">
