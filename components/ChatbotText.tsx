@@ -210,7 +210,7 @@ ${transcriptText}`,
     return (
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-4">
         <div className="relative bg-purple-700 text-white px-4 py-2 rounded-2xl shadow-lg animate-bounce">
-          <p className="text-base font-bold text-center">Get an AI Instant Quote!</p>
+          <p className="text-base font-bold text-center">SPEAK TO REQUEST A BROKER</p>
         </div>
         <button
           onClick={() => setIsOpen(true)}

@@ -185,7 +185,7 @@ export const Chatbot: React.FC = () => {
 
     if (!apiKey) {
         console.error("API Key is missing in environment.");
-        setError('Connection setup is incomplete. Please ensure GOOGLE_GEMINI_API_KEY is set.');
+        setError('Connection setup is incomplete. Please ensure GEMINI_API_KEY is set.');
         setStatus(ChatStatus.ERROR);
         return;
     }
@@ -343,7 +343,7 @@ export const Chatbot: React.FC = () => {
     return (
         <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-4">
              <div className="relative bg-purple-700 text-white px-4 py-2 rounded-2xl shadow-lg animate-bounce">
-                <p className="text-base font-bold text-center">'Speak' for an AI Instant Quote!”</p>
+                <p className="text-base font-bold text-center">SPEAK TO REQUEST A BROKER</p>
             </div>
             <button onClick={() => window.open(getChatUrl(), '_blank', 'noopener,noreferrer')} className="w-28 h-28 bg-white rounded-full flex flex-col items-center justify-center gap-1 glow-effect shadow-lg">
                 <img src="https://static.wixstatic.com/media/09d8fd_6285ad48bc614daa8fe08d6c1c4d2b25~mv2.png/v1/fill/w_170,h_167,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/JHN%20FINANCE%20SEAL%20ON%20TRANSPARENT.png" alt="Logo" className="h-20 w-20" />

@@ -38,7 +38,7 @@ const server = createServer(async (req, res) => {
       let html = await readFile(filePath, 'utf-8');
       
       // Use GOOGLE_GEMINI_API_KEY as requested, fallback to API_KEY
-      const effectiveApiKey = process.env.GOOGLE_GEMINI_API_KEY || process.env.API_KEY || '';
+      const effectiveApiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY || process.env.API_KEY || '';
       
       const apiKeyScript = `
         <script>
